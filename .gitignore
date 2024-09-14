@@ -1,0 +1,73 @@
+# Ignore Python bytecode files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore Docker image and container files
+*.env
+.env.*
+docker-compose.override.yml
+
+# Ignore Jenkins files and directories
+.jenkins/
+*.log
+
+# Ignore Terraform state files and sensitive data
+*.tfstate
+*.tfstate.backup
+.terraform/
+terraform.tfvars
+
+# Ignore Ansible inventory and logs
+*.retry
+*.log
+ansible.log
+
+# Ignore Kubernetes files and directories
+*.kube/
+.kube/
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE and editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore dependency directories
+node_modules/
+vendor/
+target/
+
+# Ignore build artifacts and temporary files
+*.tmp
+*.swp
+*.swo
+*.bak
+*.pid
+*.seed
+*.pid
+
+# Ignore compiled source files
+*.class
+*.o
+*.so
+
+# Ignore log files and databases
+*.log
+*.sql
+*.sqlite
+
+# Ignore compiled libraries
+*.dll
+*.dylib
+*.exe
+
+# Ignore local environment configuration files
+.env
+.env.local
+*.local
