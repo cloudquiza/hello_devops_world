@@ -71,3 +71,4 @@ target/
 .env
 .env.local
 *.local
+*.credentials
