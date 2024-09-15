@@ -20,4 +20,6 @@ jobs:
         run: docker build -t hello-devops-world .
 
       - name: Run the Docker container
-        run: docker run --env-file .env hello-devops-world
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: docker run -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} hello-devops-world
