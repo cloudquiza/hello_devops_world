@@ -4,8 +4,11 @@ FROM python:3.9-slim
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the Python script into the container
-COPY hello_devops.py /app
+# Copy the current directory contents into the container at /app
+COPY . /app
 
-# Specify the command to run the script
+# Install required Python packages
+RUN pip install --no-cache-dir openai==0.27.0 python-dotenv
+
+# Run hello_devops.py when the container launches
 CMD ["python", "hello_devops.py"]
