@@ -27,9 +27,11 @@ def get_ai_response(mock=False):
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
                 messages=[
-                    {"role": "system", "content": "You are a helpful assistant."},
+                    {"role": "user", "content": "Can you tell me something unique about DevOps?"},
                     {"role": "user", "content": "Hello DevOps World"}
-                ]
+                ],
+                temperature=0.8, # This introduces more variability in responses
+                top_p=0.95
             )
             ai_message = response.choices[0].message['content']
 
