@@ -1,45 +1,66 @@
+resource "aws_security_group" "allow_ssh_and_http" {
+  name_prefix = "hello-devops-allow-"
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]  # Allow SSH from anywhere, secure this in production
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
 resource "aws_instance" "hello_devops_instance" {
   ami           = "ami-0c02fb55956c7d316"  # Replace with a valid Amazon Linux AMI ID for your region
   instance_type = "t2.micro"
-  
-  # Add the key pair for SSH access
-  key_name = "my-key-pair"  # Replace with the name of the key pair you created in AWS
+  key_name      = "my-key-pair"  # Replace with the name of the key pair you created in AWS
 
-  # Set up the instance with Docker
+  # Attach the security group
+  vpc_security_group_ids = [aws_security_group.allow_ssh_and_http.id]
+
+  provisioner "local-exec" {
+    command = "sleep 30"  # Add a delay to ensure the instance is ready
+  }
+
   provisioner "remote-exec" {
     inline = [
       "sudo yum update -y",
       "sudo yum install -y docker",
       "sudo service docker start",
-      # Use the access token from an environment variable
       "echo '${var.dockerhub_access_token}' | sudo docker login -u cloudquiza --password-stdin",
-      # Pull the image from Docker Hub
-    "sudo docker pull cloudquiza/hello-devops-world:latest",
-    # Run the Docker image
-    "sudo docker run cloudquiza/hello-devops-world:latest"
+      "sudo docker pull cloudquiza/hello-devops-world:latest",
+      "sudo docker run -d -p 80:80 cloudquiza/hello-devops-world:latest"
     ]
-    # Connection block to specify how to connect to the instance
     connection {
       type        = "ssh"
-      user        = "ec2-user"  # Default user for Amazon Linux AMI
-      private_key = file("~/.ssh/my-key-pair.pem")  # Path to your private key
+      user        = "ec2-user"
+      private_key = file("~/.ssh/my-key-pair.pem")
       host        = self.public_ip
     }
   }
 
-  # Add a tag to the instance
   tags = {
     Name = "HelloDevOpsWorldInstance"
   }
 }
 
-# Define a Terraform variable to hold the Docker Hub access token
 variable "dockerhub_access_token" {
   description = "Docker Hub access token for secure login"
-  default     = ""
 }
 
-# Add the output block to display the instance state
 output "instance_state" {
   value = aws_instance.hello_devops_instance.instance_state
 }
