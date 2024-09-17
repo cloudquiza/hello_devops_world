@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-devops-world
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-devops-world
+  template:
+    metadata:
+      labels:
+        app: hello-devops-world
+    spec:
+      containers:
+        - name: hello-devops-world
+          image: cloudquiza/hello-devops-world:latest
+          ports:
+            - containerPort: 80
