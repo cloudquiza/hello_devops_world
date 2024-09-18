@@ -41,8 +41,8 @@ resource "aws_instance" "hello_devops_instance" {
       "sudo yum install -y docker",
       "sudo service docker start",
       "echo '${var.dockerhub_access_token}' | sudo docker login -u cloudquiza --password-stdin",
-      "sudo docker pull cloudquiza/hello-devops-world:latest",
-      "sudo docker run -d -p 80:80 cloudquiza/hello-devops-world:latest"
+      "sudo docker pull cloudquiza/hello-devops-world:nginx",
+      "sudo docker run -d -p 80:80 cloudquiza/hello-devops-world:nginx"
     ]
     connection {
       type        = "ssh"
