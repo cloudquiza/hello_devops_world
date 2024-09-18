@@ -24,10 +24,10 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build -t your-dockerhub-username/hello-devops-world:nignx .
-          docker push your-dockerhub-username/hello-devops-world:nignx
+          docker build -t your-dockerhub-username/hello-devops-world:latest .
+          docker push your-dockerhub-username/hello-devops-world:latest
 
       - name: Run the Docker container
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: docker run -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} -d -p 80:80 your-dockerhub-username/hello-devops-world:nignx
+        run: docker run -e OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} -d -p 80:80 your-dockerhub-username/hello-devops-world:latest
