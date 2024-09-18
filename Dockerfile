@@ -12,3 +12,15 @@ RUN pip install --no-cache-dir openai==0.27.0 python-dotenv
 
 # Run hello_devops.py when the container launches
 CMD ["python", "hello_devops.py"]
+
+# Build stage for the static front end
+FROM nginx:latest
+
+# Copy static HTML files into Nginx web root
+COPY index.html /usr/share/nginx/html/index.html
+
+# Expose port 80 to the outside world
+EXPOSE 80
+
+# Start Nginx server
+CMD ["nginx", "-g", "daemon off;"]
