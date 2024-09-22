@@ -72,3 +72,9 @@ target/
 .env.local
 *.local
 *.credentials
+
+# Ignore Playwright browser binaries
+playwright/.cache/
+
+# Ignore Playwright test results and reports
+test-results/
