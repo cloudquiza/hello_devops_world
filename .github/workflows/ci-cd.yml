@@ -33,3 +33,7 @@ jobs:
       # Optional: Check if the container is running correctly by printing the logs
       - name: Check Docker container logs
         run: docker logs $(docker ps -lq)
+
+      # Run Playwright tests when CI pipeline is triggered
+      - name: Run Playwright Tests
+        run: npx playwright test
