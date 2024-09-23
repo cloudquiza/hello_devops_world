@@ -1,3 +1,7 @@
+## Project Summary
+
+This project demonstrates essential DevOps practices, including infrastructure automation with Terraform, container orchestration using Kubernetes and Docker, automated front-end testing with Playwright, and continuous integration through GitHub Actions. The automated front-end tests ensure the front-end functionality is validated across different browsers, making the development process more reliable and streamlined.
+
 ## Project Setup Instructions
 
 ### Prerequisites
