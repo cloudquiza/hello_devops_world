@@ -10,15 +10,27 @@ Ensure you have the following tools installed on your local machine:
 - **Terraform**
 - **AWS CLI**
 - **Python 3**
-- **A text editor or IDE**
-- **An AWS account and Docker Hub account**
+- **Playwright**
+- **IDE**
+- **AWS account**
+- **Docker Hub account**
 - **Open AI Project API key**
 
 ### Step 1: Clone the Repository
 
+<details>
+
+<summary></summary>
+
 `git@github.com:cloudquiza/hello_devops_world.git`
 
-### Step 2: Set Up Environment Variables and Secrets
+</details>
+
+### Step 2: Set Up Environment Variables and Run Python Script
+
+<details>
+
+<summary></summary>
 
 1. **Create a `.env` file** in the root directory with your `OPENAI_API_KEY`. The file should look like this:
 
@@ -40,7 +52,19 @@ Ensure you have the following tools installed on your local machine:
 
 `echo $DOCKERHUB_ACCESS_TOKEN`
 
-### Step 3: Build and Run Locally with Docker
+OR
+
+`docker login -u cloudquiza`
+
+Enter docker access token at password prompt
+
+</details>
+
+### Step 3: Build and Run Docker Container Locally
+
+<details>
+
+<summary></summary>
 
 1. Build your Docker image:
 
@@ -52,17 +76,25 @@ Ensure you have the following tools installed on your local machine:
 
 3. Visit `http://localhost` to see the basic front end and confirm the app is running locally.
 
+</details>
+
 ### Step 4: Tag and push Your Docker Image:
 
-Example
+<details>
+
+<summary></summary>
 
 `docker tag hello-devops-world cloudquiza/hello-devops-world:latest`
 
-Example
-
 `docker push cloudquiza/hello-devops-world:latest`
 
+</details>
+
 ### Step 5: Deploy with Minikube
+
+<details>
+
+<summary></summary>
 
 1. Start Minikube:
 
@@ -88,7 +120,13 @@ Example
 
 6. Open the URL in your browser to view the front end.
 
+</details>
+
 ### Step 6: Deploy to AWS EC2 with Terraform
+
+<details>
+
+<summary></summary>
 
 1. **Configure AWS CLI** with your IAM user credentials:
 
@@ -97,13 +135,59 @@ Example
 2. **Initialize and apply Terraform** to set up your EC2 instance:
 
 `cd terraform`
+
 `terraform init`
+
 `terraform apply`
 
 Confirm the action by typing `yes` when prompted.
 
 3. After Terraform has finished deploying, note the public IP of the instance and visit `http://your-ec2-public-ip` to view the front end.
 
-4. **Avoid Cost**: Use the following command to stop the EC2 instance after you're done testing:
+</details>
+
+### Step 7: Install and Run Playwright Tests
+
+<details>
+
+<summary></summary>
+
+**1. Install Playwright and its dependencies**
+
+`npm install @playwright/test`
+
+`npx playwright install-deps`
+
+`npx playwright install`
+
+**2. On seperate terminal windown spin up front end locally:**
+
+`python3 -m http.server 8000`
+
+`http://localhost:8000/index.html`
+
+**3. Run Playwright tests**
+
+`npx playwright test`
+
+`npx playwright test --headed`
+
+</details>
+
+### Step 8: Delete Minikube and Destroy EC2 AWS Instance (Avoid Cost)
+
+<details>
+
+<summary></summary>
+
+**1. Run the following to stop and delete minikube**
+
+`minikube stop`
+
+`minikube delete`
+
+**2. Avoid Cost**: Use the following command to stop the EC2 instance after you're done testing:
 
 `terraform destroy`
+
+</details>
